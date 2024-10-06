@@ -12,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 
 SUPABASE_URL = 'https://cyepvmcwuzzlrozhyxsi.supabase.co'
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5ZXB2bWN3dXp6bHJvemh5eHNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjgxMzU4NTgsImV4cCI6MjA0MzcxMTg1OH0.ZuZ5LbVgMTOp7ZDgliKj1V1bMmlZMAMiidOkEC5Ky5A'
+SUPABASE_KEY = ''
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 @app.route('/')
