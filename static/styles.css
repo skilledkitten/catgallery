@@ -1,0 +1,364 @@
+@font-face {
+    font-family: 'Excalifont';
+    src: url('excalifont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    font-family: 'Excalifont', sans-serif;
+    background-color: black;
+    color: white;
+    margin: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.main {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed; /* Keep the sidebar fixed */
+    width: 20%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid white;
+    border-radius: 20px;
+    margin: 20px;
+    height: calc(100vh - 40px);
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sidebar-buttons > button {
+    display: flex;
+    font-family: 'Excalifont', sans-serif;
+    flex-direction: column;
+    border-radius: 20px;
+    width: 100%;
+}
+
+button {
+    background-color: transparent;
+    color: white;
+    font-family: 'Excalifont', sans-serif;
+    border: 1px solid white;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.content-wrapper {
+    margin-left: calc(20% + 20px); /* Adjust the left margin for the sidebar width plus the margin */
+    width: calc(80% - 20px); /* Adjust width to account for the sidebar margin */
+    position: relative;
+    padding-bottom: 80px; /* Space for the input field at the bottom */
+}
+
+.sidebar-input-wrapper {
+    position: fixed;
+    bottom: 20px;
+    margin-left: 20px; 
+    width: calc(80% - 60px);
+    height: 40px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 10; /* Ensure the input is above other elements */
+}
+
+.sidebar-input {
+    background-color: black;
+    color: white;
+    font-family: 'Excalifont', sans-serif;
+    border: 1px solid white;
+    padding: 10px 50px 10px 20px; /* Add padding on the right for button space */
+    border-radius: 20px;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    box-sizing: border-box;
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.send-button {
+    position: absolute;
+    right: 10px; /* Keep the button to the right inside the input field */
+    top: 50%;    /* Center vertically */
+    transform: translateY(-50%); /* Adjust to perfectly center */
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    height: 40px; /* Set a fixed height */
+    width: 40px;  /* Set a fixed width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: calc(20% + 40px); /* Start from the right edge of the sidebar plus 40px gap */
+    top: 20px; /* Add 20px gap from the top */
+    right: 20px; /* Add 20px gap from the right */
+    bottom: calc(40px + 20px); /* Adjust bottom to account for sidebar input height (40px) + 20px gap */
+    max-height: calc(100vh - 100px); /* Ensure the modal does not exceed the viewport height minus gaps */
+    width: calc(80% - 60px); /* Cover the remaining width minus the 20px gap on both sides */
+    overflow-y: hidden; /* Enable vertical scroll if needed */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+    border-radius: 20px;
+    border: white 1px solid;
+}
+
+.modal-content {
+    display: flex; /* Use flexbox for horizontal alignment */
+    flex-direction: column; /* Change to column to stack items vertically */
+    justify-content: flex-start; /* Align items to the start */
+    align-items: flex-start; /* Align items to the top */
+    height: 100%;
+    width: 80%;
+    margin-bottom: 20px;
+    background: transparent; /* Make it transparent to see the modal background */
+    border-radius: 20px;
+    padding: 20px; /* Add padding around the content */
+}
+
+.image-container {
+    border-radius: 20px; /* Round corners */
+    overflow: hidden; /* Ensure the image fits within the container */
+    position: absolute; /* Change to absolute positioning */
+    top: 20px; /* Set top margin */
+    left: 20px; /* Set left margin */
+    border: 2px solid white; /* White border */
+}
+
+.image-container img {
+    max-width: 512px; /* Limit the width of the image */
+    width: 100%; /* Scale down to fit the container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.modal-image {
+    width: 100%; /* Set width to 100% to fill the modal */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 20px; /* Rounded corners */
+    border: 1px solid white; /* Border around the image */
+    object-fit: fill; /* Ensure the image fits within the modal without cropping */
+    margin-top: 20px; /* 20px gap to the top */
+    margin-left: 20px; /* 20px gap to the left */
+    padding: 20px; /* Add padding inside the image box */
+    background-color: rgba(255, 255, 255, 0.1); /* Optional: add a background to the image box */
+}
+
+.modal-prompt-wrapper {
+    position: absolute; /* Positioning for the prompt */
+    top: 20px; /* Align with the image container */
+    left: calc(512px + 40px); /* Adjust left position to be next to the image container */
+    margin-left: 20px; /* Add space between the image and the prompt */
+    width: calc(100% - 512px - 60px); /* Adjust width to fit within the modal */
+}
+
+.modal-prompt {
+    width: 50%; /* Set prompt width to 50% of the modal */
+    max-width: calc(100% - 20px); /* Ensure it doesn't exceed 20px from the right border */
+    color: white;
+    font-family: 'Excalifont', sans-serif;
+    font-size: 16px; /* Adjust as needed */
+    max-width: calc(100% - 20px);
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.close-button {
+    color: white;
+    position: absolute;
+    top: -5px; /* Move 20px up from the original position */
+    right: 10px; /* Move 20px to the left from the original position */
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.esc-text {
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: -20px; /* Adjust as needed */
+    margin-left: -5px; /* Adjust as needed */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.loading-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; /* Make it circular */
+    border: 2px solid white; /* Circle border */
+    border-top: 2px solid transparent; /* Top part of the circle */
+    display: none;
+    animation: spin 1s linear infinite; /* Spinning animation */
+}
+
+.idkwhattonamethis {
+    color: transparent;
+    background: transparent;
+}
+
+/* Show loading icon when spinning */
+.send-button.loading .loading-icon {
+    display: inline; /* Show the loading icon */
+}
+
+.main-content {
+    width: 100%;
+    padding: 20px;
+    padding-bottom: 80px; /* Adjust to prevent overlap with input field */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    height: calc(100vh - 120px); /* Adjust height to account for sidebar input */
+}
+
+.artwork {
+    border: 1px solid white;
+    border-radius: 15px;
+    padding: 0;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 240px;
+    overflow: hidden;
+}
+
+.artwork img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Change from cover to contain */
+    border-radius: 15px;
+    cursor: pointer; /* Add this to change cursor on hover */
+}
+
+.artwork-title {
+    position: absolute;
+    top: 0; /* Move to the top */
+    left: 0; /* Align to the left */
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    text-align: left; /* Align text to the left */
+    font-family: 'Excalifont', sans-serif;
+    border-top-left-radius: 15px; /* Rounded corners on the top */
+    border-bottom-right-radius: 15px; /* Keep the right corner rounded */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+/* Show the prompt on hover */
+.artwork:hover .artwork-title {
+    opacity: 1; /* Show on hover */
+}
+
+.artwork-button {
+    background-color: transparent;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+/* Add this at the end of your CSS file */
+body.modal-open .gallery {
+    display: none;
+}
+body.modal-open .main-content,
+body.modal-open .gallery {
+    opacity: 0.1;
+}
+
+/* ... existing styles ... */
+
+.modal-description {
+    color: white; /* Set text color to white for visibility */
+    margin-top: 10px; /* Add some space above the description */
+    font-size: 16px; /* Set font size to match the prompt */
+    line-height: 1.5; /* Improve line height for readability */
+    max-width: calc(100% - 20px); /* Ensure it doesn't exceed 20px from the right border */
+}
+
+/* Optional: Style for the modal to ensure it looks good */
+.modal-content {
+    padding: 20px; /* Add padding inside the modal */
+    border-radius: 10px; /* Round the corners of the modal */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+}
+
+.pie-chart {
+    width: 100px; /* Set width for the pie chart */
+    height: 100px; /* Set height for the pie chart */
+    border-radius: 50%; /* Make it circular */
+    border: 5px solid black; /* Wireframe style */
+    position: absolute; /* Positioning for inner elements */
+    bottom: 20px; /* Position from the bottom */
+    left: 20px; /* Position from the left */
+}
+
+/* Optional: Style for the score text */
+.pie-chart .score {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black; /* Text color for the score */
+    font-size: 16px; /* Font size for the score */
+}
+
+.suggestions-container {
+    position: absolute; /* Position it below the input field */
+    background-color: black; /* Match the input field's background */
+    color: white; /* Text color */
+    border: 1px solid white; /* Border for visibility */
+    border-radius: 10px; /* Rounded corners */
+    max-height: 150px; /* Limit height */
+    overflow-y: auto; /* Scroll if too many suggestions */
+    z-index: 100; /* Ensure it appears above other elements */
+    width: calc(80% - 60px); /* Match the input field's width */
+    margin-left: 20px; /* Align with the input field */
+    display: none; /* Initially hidden */
+}
+
+.suggestion-item {
+    padding: 10px; /* Padding for each suggestion */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.suggestion-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
+}

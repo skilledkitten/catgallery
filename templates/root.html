@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Gallery</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <h1>catgallery</h1>
+            <div class="sidebar-buttons">
+                <button class="sign-up">sign up</button>
+                <button class="sign-in">sign in</button>
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="sidebar-input-wrapper">
+                <input type="text" class="sidebar-input" placeholder="type to create..." id="inputField">
+                <span class="send-button">→</span>
+                <span class="loading-icon"></span>
+            </div>
+            <div id="suggestions" class="suggestions-container"></div> <!-- Suggestions container -->
+            <div class="main-content">
+                <div class="gallery"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for image display -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">
+                &times;
+                <span class="esc-text">esc</span>
+            </span>
+            <div class="image-container"> <!-- Image container -->
+                <img id="modalImage" src="" alt="Full size image">
+            </div>
+            <div class="modal-prompt-wrapper"> <!-- New wrapper for prompt -->
+                <h2>prompt:</h2> <!-- Added heading -->
+                <div id="modalPrompt" class="modal-prompt"></div>
+                <h2>description:</h2> <!-- Added heading for description -->
+                <div id="modalDescription" class="modal-description">
+                    <!-- Existing description content -->
+                    <div id="pie-chart" class="pie-chart"></div> <!-- Placeholder for the pie chart -->
+                </div>
+                <h2>score:</h2> <!-- Added heading for score -->
+                <div id="modalScore" class="modal-score"></div> <!-- Placeholder for the score -->
+            </div>
+        </div>
+    </div>
+
+    <script src="static/scripts.js"></script>
+</body>
+</html>
