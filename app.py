@@ -5,6 +5,9 @@ from openai import OpenAI
 import os
 import requests
 from mistralai import Mistral
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -86,7 +89,7 @@ def generate():
     return jsonify({"url": image_url, "prompt": prompt, "pixtral_desc": pixtral_desc, "score": score})
 
 def generate_image(prompt):
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     response = client.images.generate(
         model="dall-e-2",
