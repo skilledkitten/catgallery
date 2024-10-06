@@ -86,7 +86,7 @@ def generate():
     return jsonify({"url": image_url, "prompt": prompt, "pixtral_desc": pixtral_desc, "score": score})
 
 def generate_image(prompt):
-    client = OpenAI(api_key='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')
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
     response = client.images.generate(
         model="dall-e-2",
